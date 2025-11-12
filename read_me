@@ -1,0 +1,85 @@
+📘 Overview
+
+This project contains classic computer science problems implemented in Python, covering Backtracking, Recursion, and Dynamic Programming (DP) concepts.
+Each algorithm is modular, commented, and easily testable for learning or interview preparation.
+
+🚀 Topics Covered
+🔹 1. Backtracking Problems
+Problem	Description
+N-Queens Problem	Place N queens on an N×N board so that no two queens attack each other.
+Sudoku Solver	Solve a 9×9 Sudoku puzzle using recursion and backtracking.
+Knight’s Tour	Find a path for a knight to visit every square exactly once.
+Palindrome Partitioning	Break string into all possible palindrome substrings.
+Tiling Problem	Count all possible ways to tile an n×m floor with tiles.
+🔹 2. Recursion Practice
+Problem	Description
+Indirect Recursion	Functions calling each other recursively.
+Sum of N Numbers	Demonstrates helper recursion.
+Even/Odd Checker	Uses indirect recursion logic.
+Palindrome String Check	Recursive check for palindrome strings.
+Basic Calculator	Recursive evaluation of arithmetic expressions with parentheses.
+🔹 3. Dynamic Programming (DP)
+Problem	Description
+Fibonacci (Memoization)	Classic DP example.
+Rod Cutting	Maximize profit by cutting rods into optimal lengths.
+Longest Common Subsequence (LCS)	Find maximum matching sequence between two strings.
+Longest Increasing Subsequence (LIS)	Find longest increasing pattern in array or string.
+Bellman-Ford Algorithm	Single-source shortest path (with negative weights).
+Floyd-Warshall Algorithm	All-pairs shortest path using tabulation.
+Dijkstra’s Algorithm	Shortest path algorithm (greedy + DP approach).
+Coin Game	Optimal game strategy using DP.
+🔹 4. Advanced Problems
+Problem	Description
+Inversion Count (Merge Sort)	Counts out-of-order pairs efficiently.
+Arithmetic Parenthesization	Maximize expression value with parentheses placement.
+Piano Fingering Optimization	Minimizes movement cost between notes using 3D DP.
+Wildcard Pattern Matching	Supports ? and * matching with recursion + memoization.
+🧩 Example Usage
+➤ Run N-Queen:
+python nqueen.py
+
+➤ Run Sudoku Solver:
+python sudoku_solver.py
+
+➤ Run Rod Cutting:
+python rod_cutting.py
+
+🧠 Concepts Used
+
+Recursion & Backtracking
+
+Memoization & Tabulation
+
+Graph Algorithms
+
+Dynamic Programming Optimization
+
+Indirect Function Calls
+
+Mathematical Recursion Patterns
+
+📈 Output Example (Rod Cutting)
+price = [2, 5, 7, 8]
+n = len(price)
+print("Maximum Profit:", rod_cutting(price, n))
+
+
+Output:
+
+Maximum Profit: 10
+
+🧰 Requirements
+
+Python 3.8+
+
+No external libraries required
+
+📚 Learning Purpose
+
+This repository is ideal for:
+
+DSA interview prep
+
+Recursion/DP conceptual clarity
+
+Building intuition behind algorithm design
