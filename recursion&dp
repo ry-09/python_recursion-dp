@@ -1,0 +1,1284 @@
+# # nqueen problem 
+# def is_safe(board, row, col, n):
+#   for i in range(row):
+#     print(f'checking queen at ({i},{col})  ')
+#     if board[i][col] == 1:
+#       print(f'conflict at ({i},{col})  ')
+#       return False 
+    
+# # top left-diagonal
+#   i, j = row, col
+#   while i >= 0 and j >= 0:
+#     if board[i][j] == 1:
+#       print(f'conflict at right-diagonal({i},{col})  ')
+#       return False
+    
+#     i -= 1 #make a up move 
+#     j -= 1 #make a left move
+    
+# #  top-right diagonal 
+#   i, j = row, col 
+#   while i >= 0 and j < n:
+#     if board[i][j] == 1:
+#       print(f'conflict at right-diagonal({i},{col})')
+#       return False
+  
+#     i -= 1 #make a up move
+#     j += 1 #make a right move
+  
+#   print(f'found a place for Q at ({i,j})')
+#   return True
+
+
+# def print_board(board):
+#   # board seeing helping function 
+#   for r in board :
+#     print("".join('Q' if cell else '.' for cell in r))
+#     print()
+
+# def solve_nqueen(board, row, n, solutions):
+  
+# #   base case 
+#   if row == n:
+    
+#    #  store value
+#     sol = ["".join('Q' if cell else '.' for cell in r) for r in board]
+#     solutions.append(sol)
+#     print("🎯 Solution found:")
+#     print(sol)
+#     return 
+
+#   print(f"\nPlacing queen in row {row}...")
+#   for col in range(n):   
+#     if is_safe(board, row, col, n):
+#       print(f'Placed queen at ({row},{col})')
+#       board[row][col] = 1
+#       print_board(board)
+
+#       # recursion call and backtracking
+#       solve_nqueen(board, row + 1, n, solutions)
+#       print(f'backtracking at ({row},{col})')
+#       board[row][col] = 0
+#       print_board(board)
+
+
+# n = 4 
+# board = [[0] * n for _ in range(n)]
+# solutions = []
+
+# solve_nqueen(board, 0, n, solutions)
+
+# print(f'Total Solution {len(solutions)}')
+# for sol in solutions:
+#   for row in sol:
+#     print(row)
+#     print()
+
+
+# Sudoku Solver using Backtracking
+
+        
+# def print_grid(grid):
+#   for row in grid: 
+#     print(row)
+
+# def fill_space(grid):
+#   for i in range(9):
+#     for j in range(9):
+#      if grid[i][j] == 0: #empty cell
+#        return i, j 
+#   return None
+     
+# def is_valid(grid, num, pos):
+#   row, col = pos 
+
+#   #row check 
+#   if num in grid[row]:
+#     return False 
+  
+#   #check coloumn 
+#   if num in [grid[i][col] for i  in range(9)]:
+#     return False 
+  
+#   # 3 by 3 grid 
+#   box_x, box_y = row // 3 , col // 3 
+#   for i in range( box_x * 3, box_x * 3 + 3 ):
+#     for j in range( box_y * 3, box_y * 3 + 3 ):
+#       if grid[i][j] == num:
+#         return False 
+#   return True  
+
+# def solve(grid):
+#   find = fill_space(grid)
+#   if not find:
+#     return True  
+#   row, col = find 
+ 
+#   for num in range(1, 10):
+#     if is_valid(grid, num, (row, col)):
+#       grid[row][col] = num
+
+#       # recursion + backtracking 
+#       if solve(grid):
+#         return True 
+    
+#       grid[row][col] = 0
+      
+#   return False
+      
+      
+    
+         
+# # Example Sudoku (0 = empty cell)
+# sudoku = [
+#     [5, 3, 0, 0, 7, 0, 0, 0, 0],
+#     [6, 0, 0, 1, 9, 5, 0, 0, 0],
+#     [0, 9, 8, 0, 0, 0, 0, 6, 0],
+#     [8, 0, 0, 0, 6, 0, 0, 0, 3],
+#     [4, 0, 0, 8, 0, 3, 0, 0, 1],
+#     [7, 0, 0, 0, 2, 0, 0, 0, 6],
+#     [0, 6, 0, 0, 0, 0, 2, 8, 0],
+#     [0, 0, 0, 4, 1, 9, 0, 0, 5],
+#     [0, 0, 0, 0, 8, 0, 0, 7, 9]
+# ]
+
+# if solve(sudoku):
+#     print_grid(sudoku)
+# else:
+#     print("No solution exists")
+
+         
+# # Knight's Tour
+
+# N = 8 #grid size
+
+# # 8 possible moves of a knight
+# moves_x = [2, 1, -1, -2, -2, -1, 1, 2]
+# moves_y = [1, 2, 2, 1, -1, -2, -2, -1]
+
+# def is_valid(x, y, board):
+#   return 0 <= x < N and 0 <= y < N and board[x][y] == -1
+
+# def solve_knight(x, y, movei, board):
+#   #base case 
+#   if N * N == movei:
+#     return True 
+#   for i in range(8):
+#     next_x = x + moves_x[i] 
+#     next_y = y + moves_y[i]
+  
+#     if is_valid(next_x, next_y, board):
+#       board[next_x][next_y] = movei
+
+#       # recursion + backtracking
+#       if solve_knight(next_x, next_y, movei + 1, board):
+#         return True
+    
+#       board[next_x][next_y] = -1
+#   return False
+
+# def knight_tour():
+#   board = [[-1 for _ in range(N)] for _ in range(N)]
+#   board[0][0] = 0
+#   if not solve_knight(0, 0, 1, board):
+#     print('No solution find')
+
+#   else:
+#     for row in board:
+#       print(row)
+# knight_tour()
+
+
+
+# inversion count
+
+# def merge_and_count(arr, left, mid, right):
+#   i,j = left, mid + 1 
+#   temp = []
+#   inv_count = 0 
+
+# #   merge step 
+#   while i <= mid and j <= right:
+#     if arr[i] <= arr[j]:
+#       temp.append(arr[i])
+#       i += 1 
+#     else:
+#       temp.append(arr[j])
+#       inv_count += (mid - i + 1)
+#       j += 1 
+
+#   while i <= mid:
+#     temp.append(arr[i])
+#     i += 1 
+
+#   while j <= right:
+#     temp.append(arr[j])
+#     j += 1 
+
+# # copy back
+#   for k in range(len(temp)):
+#     arr[left + k] = temp[k]
+#   return inv_count
+
+# def count_inversion_recursive(arr, left, right):
+#   # base case 
+#   if left >= right:
+#     return 0
+  
+#   mid = (left + right) // 2
+
+#   inv_count = 0 
+
+#   # divide 
+#   inv_count += count_inversion_recursive(arr, left, mid)
+#   inv_count += count_inversion_recursive(arr, mid + 1, right)
+
+#   # conqur 
+#   inv_count += merge_and_count(arr, left, mid, right)
+
+#   return inv_count 
+
+# def count_inversions(arr):
+#   return count_inversion_recursive(arr, 0, len(arr) - 1)
+ 
+# #Example 
+# arr = [2, 4, 1, 3, 5]
+# print("inversion count:", count_inversions(arr))
+
+    
+
+
+
+# palindrome partitioing                                                                                                                             
+# def is_palindrome(s):
+#     return s == s[::-1]
+
+                                                                                                    
+# def palindrome_partitioning(s):
+#     result = []
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+#     def backtrack(start, path):
+#         # Base case: agar string pura cover ho gaya
+#         if start == len(s):
+#             result.append(path[:])  # copy current path
+#             return
+
+#         for end in range(start + 1, len(s) + 1):
+#             prefix = s[start:end]
+#             if is_palindrome(prefix):
+#                 path.append(prefix)         # choose
+#                 backtrack(end, path)        # recursion
+#                 path.pop()                  # un-choose (backtrack)
+
+#     backtrack(0, [])
+#     return result
+
+
+# if __name__ == "__main__":
+#     s = "aab"
+#     partitions = palindrome_partitioning(s)
+#     print("All Palindrome Partitions of", s, "are:")
+#     for p in partitions:
+#         print(p)
+                                                                  
+
+
+
+
+
+
+# #tiling problem  
+
+# def tile_floor(n, m, path, result):
+#     # Base case: floor fill ho gaya
+#     if n == 0:
+#         result.append(path[:])   # ek solution copy karke store karo
+#         return
+
+#     # Agar horizontal tile (1 x m) lag sakta hai
+#     if n - 1 >= 0:
+#         path.append("H")   # H = horizontal
+#         tile_floor(n - 1, m, path, result)
+#         path.pop()         # backtrack
+
+#     # Agar vertical tile (m x 1) lag sakta hai
+#     if n - m >= 0:
+#         path.append("V")   # V = vertical
+#         tile_floor(n - m, m, path, result)
+#         path.pop()         # backtrack
+
+
+# def tiling_with_rotation_backtrack(n, m):
+#     result = []
+#     tile_floor(n, m, [], result)
+#     return result
+
+
+# # Example
+# n, m = 4, 2
+# solutions = tiling_with_rotation_backtrack(n, m)
+# print("Total ways:", len(solutions))
+# for sol in solutions:
+#     print(sol)
+   
+# tilling problem
+# v_count = 0 
+# h_count = 0
+
+
+# def tile(n, m, path, result):
+#   global v_count ,h_count
+#   if n == 0:
+#    print('find  a path ')
+#    result.append(path[:])
+#    return 
+  
+#   if n -1 >= 0:
+#     path.append('H')
+    
+#     v_count += 1
+#     print('horizotal ways searching step no ', v_count )
+#     tile(n -1, m, path, result)
+#     path.pop()
+
+#   if n - m >= 0:
+#     path.append('V')
+#     h_count += 1
+#     print('vertical way of searching step no',v_count)
+#     tile(n - m, m, path, result)
+#     path.pop()
+
+# def t(n, m):
+#   result =[]
+#   tile(n, m, [], result)
+#   return result 
+
+# n, m = 10, 2 
+# s = t(n, m)
+# print('Total ways:', len(s))  
+# for sol in s:
+#   print(sol)
+
+       
+# def invite_ways(n):
+#     if n == 0 or n == 1:
+#         return 1
+#     if n == 2:
+#         return 2
+#     return invite_ways(n-1) + (n-1) * invite_ways(n-2)
+
+
+# # Example
+# n = 4
+# print("Number of ways to invite", n, "people:", invite_ways(n))
+  
+
+
+
+# indirect recursion
+
+# def func_a(n):
+#   if n >= 0:
+#     print('A:', n)
+#     func_b(n - 1)
+
+# def func_b(n):
+#   if n >= 0:
+#     print('B:', n)
+#     func_a(n - 1)
+
+# if __name__  == '__main__':
+#   func_a(5)
+
+
+
+
+# def sum_start(n):
+#   if n == 0:
+#     return 0 
+#   return sum_helper(n)
+
+# def sum_helper(n):
+#   if n == 0:
+#     return 0 
+#   return n + sum_start(n - 1)
+
+
+# if __name__ == "__main__":
+#   num = 5 
+#   print("sum of first", num, "number is:", sum_start(num))
+
+
+
+# even odd checking by indirect recursion 
+
+# def is_even(n):
+#   if n == 0:
+#     return True 
+#   return is_odd(n - 1)
+
+# def is_odd(n):
+#   if n == 0:
+#     return False 
+#   return is_even(n - 1)
+
+# if __name__ == '__main__':
+#   num = 987
+#   if is_even(num):
+#     print(num, 'is even')
+  
+#   else:
+#     print(num, 'is odd')
+
+
+
+
+# palindrome indirect recursion 
+
+# def is_palindrome(s, left, right):
+#   if left >= right:
+#     return True 
+#   if s[left] != s[right]:
+#     return False 
+#   return is_palindrome(s, left + 1, right - 1)
+ 
+
+# def is_palindrome_helper(s, left, right):
+#   if left >= right:
+#     return True 
+#   if s[left] != s[right]:
+#     return False 
+#   return is_palindrome_helper(s, left + 1, right - 1)
+
+
+# if __name__ == '__main__':
+#   word = 'madam'
+#   if is_palindrome(word, 0, len(word) - 1):
+#     print(word,'is_palindrome')
+#   else:
+#     print(word, 'is not palindrome')
+    
+
+# Wildcard Matching 
+
+# from functools import lru_cache 
+# def isMatch(s:str, p:str) -> bool:
+  
+# #   store result
+#   @lru_cache(maxsize=None)
+#   def match(i:int, j:int) -> bool:
+    
+#     # base case 
+#     if j == len(p):
+#       return i == len(s)
+    
+#     if p[j] == '*':
+#       return match(i, j + 1) or (i < len(s) and match(i + 1, j))
+      
+#     else:
+#       first_match = i < len(s) and p[j] == s[i] or p[j] == '?'
+#       return first_match and match(i + 1, j + 1)
+#   return match(0, 0)
+         
+  
+# # Test cases
+# print(isMatch("abc", "a*"))       
+# print(isMatch("abc", "a?c"))      
+# print(isMatch("abcd", "a*d"))     
+# print(isMatch("abcd", "a*c?"))    
+# print(isMatch("abc", "a*d"))      
+# print(isMatch("abcd", "a*?d"))    
+# print(isMatch("abcd", "*b*"))     
+# print(isMatch("", "*"))            
+# print(isMatch("", "?"))        
+
+
+
+# basic calculator using recursion 
+
+# def evaluate(expr, i=0):
+#     result = 0
+#     num = 0
+#     sign = 1  # +1 for plus, -1 for minus
+
+#     while i < len(expr):
+#         ch = expr[i]
+        
+#         if ch.isdigit():
+#             num = num * 10 + int(ch)   
+#         elif ch in "+-":
+#             result += sign * num
+#             num = 0
+#             sign = 1 if ch == '+' else -1
+#         elif ch == '(':
+#             num, i = evaluate(expr, i + 1)  # recursion andar ka solve karega
+#         elif ch == ')':
+#             result += sign * num
+#             return result, i   
+#         i += 1
+    
+#     result += sign * num
+#     return result if i == len(expr) else (result, i)
+
+
+
+# s = "(1+(4+5+2)-3)+(6+8)"
+# print(evaluate(s))  
+
+
+
+
+
+
+# -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# ------------------------------------------------------------DYNAMIC PROGRAMMING---------------------------------------------------------------------------
+
+# fibonacci series 
+
+# memo = {}  #store value
+# def fib(n):
+#   if n in memo:
+#     return memo[n]
+  
+#   if n == 0 or n ==1: 
+#    return n
+  
+#   # recurrsion  + dp
+#   result =  fib(n -1) + fib(n - 2) 
+#   memo[n] = result  
+#   return result
+
+
+# a = fib(9)
+# print(a)
+
+
+
+
+
+# DAG graph 
+
+
+
+# graph = {
+#     0: [(1, 3), (2, 6)],
+#     1: [(2, 4), (3, 4), (4, 11)],
+#     2: [(3, 8), (6, 11)],
+#     3: [(4, -4), (5, 5), (6, 2)],
+#     4: [(7, 9)],
+#     5: [(7, 1)],
+#     6: [(7, 2)],
+#     7: []
+# }
+
+# source = 0
+# target = 7
+
+# # Memoization table
+# dp = {}
+
+# def shortest_path(u):
+#     # Base case
+#     if u == target:
+#         return 0
+
+#     # Agar already calculated hai
+#     if u in dp:
+#         return dp[u]
+
+    
+#     ans = float("inf")
+
+    
+#     for v, w in graph[u]:
+#         ans = min(ans, w + shortest_path(v))
+
+#     dp[u] = ans
+#     return ans
+
+# print("Shortest distance from", source, "to", target, "=", shortest_path(source))
+
+
+
+
+
+# # Baller_problem
+
+# def baller_max_score(pins):
+#   n = len(pins)
+
+#   if n == 0: 
+#     return 0 
+  
+#   if n == 1:
+#     return pins[0]
+  
+
+#   dp = [0] * (n + 1)
+#   dp[1] = pins[0]
+
+#   for i in range(2, n + 1):
+#     dp[i] = max(
+#       dp[i-1] + pins[i - 1], #take one pin 
+#       dp[i - 2] + pins[i - 2] * pins[i - 1]
+
+
+#     )
+
+#   return dp[n]
+
+# print(baller_max_score([1, 4, 3, 5]))  
+
+
+# longest common subsequence 
+
+# dp = {}
+# def func_lcd(a, b, i=0, j=0):
+#   if (i, j) in dp:
+#     return dp[(i,j)]
+    
+# #   base case 
+#   if len(a) == i or len(b) == j:
+#     return 0
+
+#   if a[i] == b[j]:
+#     dp[(i,j)] = 1 + func_lcd(a, b, i +1 , j + 1) #if one positoin match in both
+#     return dp[(i, j)]
+     
+#   else:
+#     dp[(i, j)] = max(
+#         func_lcd(a, b, i+1, j),
+#         func_lcd(a, b, i, j+1)
+#     )
+#     return dp[(i, j)]
+
+# a = "ABCBDAB"
+# b = "BDCABA"
+
+# print("LCS length:", func_lcd(a, b))
+ 
+
+
+
+# dp = {}
+# def lis(a, i=0, prev_idx=-1):
+#   if (i, prev_idx) in dp:
+#     return dp[(i, prev_idx)]
+  
+#   if i == len(a):
+#     return 0 
+  
+#   skip = lis(a, i + 1, prev_idx)
+    
+#     # Option 2: take current element if it's increasing
+#   take = 0
+#   if prev_idx == -1 or a[i] > a[prev_idx]:
+#     take = 1 + lis(a, i + 1, i)
+
+#   dp[(i, prev_idx)] = max(
+#       skip, take
+#     )
+    
+#   return dp[(i, prev_idx)]
+
+# w = "CARBOHYDRATE"
+# print(lis(w))
+
+
+# LIS with tabulation 
+
+# def lis(nums):
+#   n = len(nums)
+#   dp = [1] * n 
+
+
+#   for i in range(n - 1, -1, -1): #backward tracking
+#     for j in range(i + 1, n): # forward tracking 
+#      if nums[j] >= nums[i]:
+#        dp[i] = max(
+#          dp[i], 1 + dp[j] 
+#        )
+#   return max(dp)
+
+
+# w = "CARBOHYDRATE"
+# print(lis(w))
+
+
+
+
+# alternate coin game(memoization approch s)
+
+# dp = {}
+
+# def ACG(arr, i, j):
+#   if i >= i:
+#     return 0 
+  
+#   if dp(i, j) in dp:
+#     return dp[(i, j)]
+  
+#   left_side = arr[i] + min(ACG(arr, i + 2, j), ACG(arr, i + 1, j - 1))
+
+
+#   right_side = arr[j] + min(ACG(arr, i , j - 2), ACG(arr, i + 1, j - 1))
+
+#   dp[(i, j)] = max(left_side, right_side)
+#   return dp[(i, j)]
+
+# w = [2, 100, 5, 50]
+# print(ACG(w, 0, len(w)-1))
+
+
+# def acg(arr):
+#    n = len(arr)
+#    dp = [[0] * n for _ in range(n)]
+
+#   # one coin 
+#    for  i in range(n):
+#       dp[i][i] = arr[i]
+
+# #   two coin 
+#    for i in range(n - 1):
+#       dp[i][i + 1] = max(arr[i], arr[i + 1])
+ 
+# #  more than two 
+#    for gap in range(2, n):
+#       for i in range(n - gap):
+#          j = i + gap
+
+#         #  if player choose left coin 
+#          left_pick = arr[i] + min(           
+#           dp[i + 2][j] if i + 2 <=  j else 0,
+#            dp[i + 1][j - 1] if i + 1 <= j - 1 else 0
+#                )
+#          #  if player choose right coin
+#          right_pick = arr[j] + min(
+#             dp[i][j - 2] if i <= j - 2 else 0,
+#             dp[i + 1][j - 1] if i + 1 <= j - 1 else 0           
+#              )
+         
+
+#          dp[i][j] = max(left_pick, right_pick)
+
+#    return dp[0][n - 1]
+        
+# # Example
+# w = [100, 2, 5, 3]
+# print(acg(w)) 
+
+
+# -------------------------------------------------
+# folyd warshall algoritm or all shortest pair  
+
+# inf = 10 ** 9 
+# def folyd_warshall(graph, i, j, k,  dp):
+#     if (i, j, k) in dp:
+#         return dp[(i, j, k)]
+    
+#     if k == 0:
+#       dp[(i, j, k)] = graph[i][j]
+#       return graph[i][j]
+    
+#     without_k = folyd_warshall(graph, i, j, k - 1, dp)
+
+# #   via k 
+#     with_ki = folyd_warshall(graph, i, k, k - 1, dp)
+#     with_kj = folyd_warshall(graph, k, j, k - 1, dp)
+
+#     if with_ki == inf or with_kj == inf:
+#        with_k = inf
+#     else:
+#        with_k = with_ki + with_kj 
+
+#     dp[(i, j, k )] = min(without_k, with_k)
+#     return dp[(i, j, k)]
+    
+#   # Example graph
+# graph = [
+#     [0, 5, 12, inf],
+#     [inf, 0, 3, inf],
+#     [inf, inf, 0, 1],
+#     [2, inf, inf, 0]
+# ]
+
+# dp = {}
+# n  = len(graph)
+
+# dist = [[folyd_warshall(graph, i, j, n - 1, dp)for j in range(n)]for i in range(n)]
+
+# for row in dist:
+#    print(row)
+
+# ---------------------------------------------
+# floyd_warshall algo using tabulation approch 
+
+# inf = 10 ** 9 
+
+# graph = [
+#     [0, 5, 12, inf],
+#     [inf, 0, 3, inf],
+#     [inf, inf, 0, 1],
+#     [2, inf, inf, 0]
+# ]
+
+# n = len(graph)
+
+# dist = [[graph[i][j] for j in range(n)]for i in range(n)]
+
+# # floyd_logic
+
+# for k in range(n):
+#   for i in range(n):
+#     for j in range(n):
+
+#       if dist[i][k] != inf and dist[k][j] != inf:
+#         dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]) 
+# for row in dist :
+#   print(row)
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# bellman_ford_algorithm
+
+# import math 
+# def bellman_ford_recursive(edge, n, src):
+#   dp = {}
+  
+#   incoming_edge  = {i: [] for i in range(n)}
+#   for u, v, w in edge:
+#     incoming_edge[v].append((u, w))
+
+
+#   def solve(v, k):
+#      if k == 0:
+#        return 0 if  v == src else math.inf 
+     
+#      if (v, k) in dp:
+#        return dp[(v, k)]
+
+#      best = solve(v, k - 1)
+
+#      for u, w in incoming_edge[v]:
+#        candidate = solve(u, k - 1) + w 
+#        if candidate < best:
+#          best = candidate 
+                         
+#      dp[(v, k)] = best 
+#      return best 
+  
+
+#   dist = [solve(v, n - 1) for v in range(n)]
+#   return dist
+
+# if __name__ == "__main__":
+#     # Graph: list of edges (u, v, w)
+#     edges = [
+#         (0, 1, 4),
+#         (0, 2, 5),
+#         (1, 2, -3),
+#         (2, 3, 4),
+#         (3, 1, -2)
+#     ]
+#     n = 4       # number of vertices
+#     src = 0     # source vertex
+
+#     print("Shortest distances (recursive + DP):")
+#     print(bellman_ford_recursive(edges, n, src))
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------
+# Tabulation approach  
+
+# import math 
+# def bellman_folyd_algo(edges, vertices, src):
+#   dp = [[math.inf] * vertices for _ in range(vertices)]
+#   dp[0][src] = 0 
+  
+#   for i in range(1, vertices):
+#     dp[i] = dp[i - 1][:]
+#     update = False 
+
+
+  
+#     for u, v, w in edges:
+#       if dp[i - 1][u] != math.inf and dp[i - 1][u] + w < dp[i][v]:
+#         dp[i][v] =  dp[i - 1][u] + w 
+#         update = True 
+
+
+#     if not update:
+#       break
+
+#     # negitive cycle dedection
+#     for u, v, w in edges:
+#       if dp[vertices - 1][u] != math.inf and dp[vertices - 1][u] + w < dp[vertices][v]:
+#         print('negitive cycle deducted ')
+#         return None 
+    
+#   return dp[i]
+  
+
+# edges = [
+#     (0, 1, 5),
+#     (0, 2, 4),
+#     (1, 3, 3),
+#     (2, 1, 6),
+#     (3, 2, -2)
+# ]
+
+# print(bellman_folyd_algo(edges, 4, 0))
+
+
+      
+# like pr similar to dijkstra algorithm memoization approch
+
+# import math 
+# def dijkastra_algo(graph, src):
+#   memo = {}
+
+#   def djs(node):
+    
+#     if node in memo:
+#       return memo[node]
+    
+#     if src == node:
+#       memo[node] = 0 
+#       return 0 
+    
+#     min_dis = math.inf
+#     for n in graph:
+#       if node in graph[n]:
+#         dis = djs(n) + graph[n][node]
+#         min_dis = min(min_dis, dis)
+
+#     memo[node] = min_dis 
+#     return memo[node]
+  
+    
+#   result = {}
+#   for node in graph:
+#     result[node] = djs(node)
+#   return result[node]
+
+
+# # Example Graph (directed + weighted)
+# graph = {
+#     'A': {'B': 4, 'C': 2},
+#     'B': {'C': 5, 'D': 10},
+#     'C': {'E': 3},
+#     'D': {'E': 4},
+#     'E': {}
+# }
+
+# shortest_paths = dijkastra_algo(graph, 'A')
+# print(shortest_paths)
+
+# import math 
+
+# def dijkastra_tabulation(graph, src):
+#   nodes = list(graph.keys())
+#   V = len(nodes)
+
+# #  intialilze 
+#   distance = {node:math.inf for node in nodes}
+#   parents = {node:None for node in nodes}
+#   visited = {node:False for node in nodes}
+
+#   distance[src] = 0 
+
+#   for _ in range(V):
+#     u = None 
+#     min_dist = math.inf  
+#     for node in nodes:
+#       if not visited[node] and distance[node] < min_dist:
+#         min_dist = distance[node]
+#         u = node 
+
+#       # if no reachable unvisted not remains break 
+#       if u is None:
+#         break 
+
+#       visited[u] = True 
+
+#       # relax neighbour of new 
+#       for neighbour, weight in graph[u].items():
+#         if visited[neighbour]:
+#           continue 
+#         new_dist = distance[u] + weight 
+#         if new_dist < distance[neighbour]:
+#           distance[neighbour] = new_dist 
+#           parents[neighbour] = u
+
+#     return distance, parents 
+  
+# def reconstruct_path(parent, src, dest):
+#   if parent.get(dest) is None:
+#     if src == dest:
+#       return[src]
+#     return[]
+  
+#   path = []
+#   node = dest
+#   while node is not None:
+#     path.append(node)
+#     if node == src:
+#       break 
+#     node  = parent[node] 
+#     path.reverse()
+#     if path[0] != src:
+#       return []
+#     return path 
+  
+
+# graph = {
+#     'A': {'B': 4, 'C': 2},
+#     'B': {'C': 5, 'D': 10},
+#     'C': {'E': 3},
+#     'D': {'E': 4},
+#     'E': {}
+# }
+  
+# distances, parent = dijkastra_tabulation(graph, 'A')
+# print("Distances:", distances)
+# print("Parents:", parent)
+# # print paths
+# for node in graph:
+#     path = reconstruct_path(parent, 'A', node)
+#     print(f"Path A -> {node}:", path, "Distance:", distances[node])
+
+#  --------------------------------------------------------------------------------- 
+
+
+# maximum parthsis artihmatics 
+
+# import operator
+
+# def tokenize(expr):
+#     nums, ops = [], []
+#     i = 0
+#     while i < len(expr):
+#         if expr[i] in '+*':
+#             ops.append(expr[i])
+#             i += 1
+#         else:
+#             # Handle negative numbers
+#             sign = 1
+#             if expr[i] == '-':
+#                 sign = -1
+#                 i += 1
+#             num = 0
+#             while i < len(expr) and expr[i].isdigit():
+#                 num = num*10 + int(expr[i])
+#                 i += 1
+#             nums.append(sign*num)
+#     return nums, ops
+
+# def max_arith(expr):
+#     ops_dict = {'+': operator.add, '*': operator.mul}
+#     nums, ops = tokenize(expr)
+#     n = len(nums)
+    
+#     dp_max = [[0]*n for _ in range(n)]
+#     dp_min = [[0]*n for _ in range(n)]
+    
+#     # Initialize d1p
+#     for i in range(n):
+#         dp_max[i][i] = nums[i]
+#         dp_min[i][i] = nums[i]
+    
+#     # Fill DP table
+#     for l in range(2, n+1):  # length of subexpression
+#         for i in range(n - l + 1):
+#             j = i + l - 1  
+#             dp_max[i][j] = float('-inf')
+#             dp_min[i][j] = float('inf')
+#             for k in range(i, j):
+#                 op = ops_dict[ops[k]]              
+#                 a = op(dp_max[i][k], dp_max[k+1][j])
+#                 b = op(dp_max[i][k], dp_min[k+1][j])
+#                 c = op(dp_min[i][k], dp_max[k+1][j])
+#                 d = op(dp_min[i][k], dp_min[k+1][j])
+#                 dp_max[i][j] = max(dp_max[i][j], a, b, c, d)
+#                 dp_min[i][j] = min(dp_min[i][j], a, b, c, d)
+                                      
+                                      
+#     return dp_max[0][n-1]
+
+# # Example usage:
+# expr = "5*3+4+5*3"
+# print(max_arith(expr))  # Output: maximum value with parentheses
+# expr2 = "5*-3+2*4"
+# print(max_arith(expr2))  # Works with negative numbers too
+
+
+
+# piano_fingring
+
+# import math 
+
+# notes = [60, 62, 65, 64, 67, 69, 71, 72]  # Example melody (C4 to C5 region)
+
+# fingers = [1, 2, 3, 4, 5] 
+
+# dp = [[[math.inf for _ in fingers ] for _ in fingers ]for _ in range(len(notes))]
+# prev_state = [[[None for _ in fingers ] for _ in fingers ]for _ in range(len(notes))]
+
+
+# # intialization  
+# for fL in fingers:
+#   for fR in fingers:
+#     dp[0][fL-1][fR-1] = 0 
+
+# def cost_func(note_prev, note_curr, fL_prev, fL_curr, fR_prev, fR_curr):
+#   finger_move = abs(fL_curr - fL_prev) + abs(fR_curr - fR_prev)
+#   note_move = 0.5 * abs(note_curr - note_prev)
+#   hand_distance = 0.2 * abs((note_curr - note_prev))
+#   return finger_move + note_move + hand_distance 
+  
+
+# for i in range(1, len(notes)):
+#   for fL_prev in fingers:
+#     for fR_prev in fingers:
+#       for fL_curr in fingers:
+#         for fR_curr in fingers:  
+#           c = cost_func(notes[i - 1], notes[i], fL_prev, fL_curr, fR_prev, fR_curr)
+#           total = dp[i - 1][fL_prev - 1][fR_prev - 1] + c   
+                                                                                   
+#           if total < dp[i][fL_curr - 1][fR_curr - 1]  :
+#             dp[i][fL_curr - 1][fR_curr - 1] = total
+#             prev_state[i][fL_curr - 1][fR_curr - 1] = (fL_prev, fR_prev)
+
+# min_cost = math.inf 
+# best_pair = None 
+
+# for fL in fingers:
+#   for fR in fingers:
+#     if dp[-1][fL - 1][fR - 1] < min_cost:
+#       min_cost = dp[-1][fL - 1][fR - 1]
+#       best_pair = (fL, fR)
+
+# sequence = []
+# curr = best_pair 
+# for i in range(len(notes)-1, -1, -1):
+#   sequence.append(curr)
+#   curr = prev_state[i][curr[0] - 1][curr[1] -1] if i > 0 else None 
+#   if curr is None:
+#     break 
+
+# sequence.reverse()
+
+# # 🎯 Output
+# for i, (fL, fR) in enumerate(sequence):
+#     print(f"Note {notes[i]} -> Left: Finger {fL}, Right: Finger {fR}")
+
+# print(f"\n✅ Min Total Cost: {min_cost:.2f}")
+
+
+
+
+
+# classical cutting rod 
+
+# def rod_cutting(price, n, memo=None):
+  
+#   if memo is None:
+#     memo = {}
+
+#   if n == 0:
+#     return 0 
+  
+#   if n in memo:
+#     return memo[n]
+  
+#   max_profit = float('-inf')
+
+
+#   for rod_cut in range(1, n + 1): 
+#     profit = price[rod_cut - 1] + rod_cutting(price, n - rod_cut, memo )
+#     max_profit = max(profit, max_profit)
+    
+#     memo[n] = max_profit 
+#   return memo[n]
+
+# price = price = [2, 5, 7, 8]  # Prices for lengths 1,2,3,4
+# n = 4 
+# print("Maximum Profit:", rod_cutting(price, n))
+    
+
+
+# cutting rod length random 
+# def cutting_rod(price, T_length, memo = None):
+#   if memo is None:
+#     memo = {}
+  
+#   if T_length == 0 :
+#     return 0 
+  
+#   if T_length < 0:
+#     return float('-inf')  # invalid cut
+
+#   if T_length in memo:
+#     return memo[T_length]
+  
+#   max_profit = float('-inf')
+  
+  
+#   for i in range(len(L)):
+#     cut_len = L[i]
+#     if cut_len <= T_length:
+#       profit = price[i] + cutting_rod(price, T_length - cut_len, memo )
+#       max_profit  = max(profit, max_profit)
+    
+#   memo[T_length] = max_profit
+#   return max_profit 
+
+# L = [1, 4, 5, 6] 
+# price = price = [2, 5, 7, 8]
+# T_length = 13 
+# print(cutting_rod(price, T_length))
+
+
+def rod_cutting(price, n):
+  
+  dp = [0] * (n + 1)
+  
+  for i in range(1, n + 1):
+    max_value = 0 
+    for j in range(1, i + 1):
+      max_value = max(max_value, price[j - 1] + dp[i - j] )
+    dp[i] = max_value 
+  return dp[n]
+  
+# Example
+price = [2, 5, 7, 8]
+n = len(price)
+print("Maximum Profit:", rod_cutting(price, n))
+
+
+
+
+  
+
+
+
+
+
+
+
+         
+     
+        
+    
+    
+
+    
+
+
+  
+  
+
+
+  
